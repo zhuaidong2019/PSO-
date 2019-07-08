@@ -1,0 +1,39 @@
+#encoding=utf8
+from numpy import *
+import matplotlib.pyplot as plt
+
+def optimal_parameter (a, b, l0, l, theta):
+    v=0
+    s=a-40
+    c=sqrt(3)
+    l1=l0+l
+    x1=array([a/(2*c),a/2,0])
+    x2=array([a/(2*c),-a/2,0])
+    x3=array([-a/c,0,0])
+
+    thetamin=(90-theta/2)*pi/180
+    thetamax=(90+theta/2)*pi/180
+    thetabtm=(theta/2)*pi/180
+
+    for x in range(0,int(2*a),5):
+        for y in range(-int(s/2),int(s/2),5):
+            for z in range(int(l0/2),int(l1),5):           
+                x21=array([x+b/(2*c),y+b/2,z])
+                x22=array([x+b/(2*c),y-b/2,z])
+                x23=array([x-b/c,y,z,])
+            
+                d1=sqrt(dot(abs((x1-x21)),abs((x1-x21))))
+                d2=sqrt(dot(abs((x2-x22)),abs((x2-x22))))
+                d3=sqrt(dot(abs((x3-x23)),abs((x3-x23))))
+            
+                theta1=math.asin(z/d1)
+                theta2=math.asin(z/d2)
+                theta3=math.asin(z/d3)
+
+                theta21=pi/2-theta1
+                theta22=pi/2-theta2
+                theta23=pi/2-theta3
+            
+                if d1>l0 and d1<l1 and theta1>thetamin and theta1<thetamax and theta21<thetabtm and d2>l0 and d2<l1 and theta2>thetamin and theta2<thetamax and theta22<thetabtm and d3>l0 and d3<l1 and theta3>thetamin and theta3<thetamax and theta23<thetabtm:
+                    v=v+1
+    return v
